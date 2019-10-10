@@ -1,20 +1,34 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Medidores.Observer;
+using Medidores.Subject;
+using System;
 using System.Windows.Forms;
 
 namespace Medidores
 {
     public partial class Form1 : Form
     {
+        private readonly ISubject _sensores;
+        private IObserver _display;
         public Form1()
         {
             InitializeComponent();
+            _sensores = new MedidorSensores((int)numericUpDown1.Value, (int)numericUpDown3.Value, (int)numericUpDown2.Value);
+            _display = new ObserverAlerta(_sensores);
+        }
+
+        private void numericUpDown1_ValueChanged(object sender, EventArgs e)
+        {
+            ((MedidorSensores) _sensores).NivelAceite = (int) numericUpDown1.Value;
+        }
+
+        private void numericUpDown3_ValueChanged(object sender, EventArgs e)
+        {
+            ((MedidorSensores)_sensores).NivelAgua = (int)numericUpDown3.Value;
+        }
+
+        private void numericUpDown2_ValueChanged(object sender, EventArgs e)
+        {
+            ((MedidorSensores)_sensores).NivelPresionNeumaticos = (int)numericUpDown2.Value;
         }
     }
 }
