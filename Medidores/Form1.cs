@@ -30,5 +30,19 @@ namespace Medidores
         {
             ((MedidorSensores)_sensores).NivelPresionNeumaticos = (int)numericUpDown2.Value;
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            _display = new ObserverAlerta(_sensores);
+            button1.Enabled = false;
+            button2.Enabled = true;
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            _sensores.EliminarObserver(_display);
+            button1.Enabled = true;
+            button2.Enabled = false;
+        }
     }
 }
