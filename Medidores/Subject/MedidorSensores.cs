@@ -8,9 +8,9 @@ namespace Medidores.Subject
         #region Estado
 
         // Atributos que modelan el estado
-        private int nivelAceite;
-        private int nivelAgua;
-        private int nivelPresionNeumaticos;
+        private int nivelBateria;
+        private int nivelTiempo;
+        private bool conectado;
 
         #endregion
 
@@ -19,46 +19,46 @@ namespace Medidores.Subject
 
         #region Properties
 
-        public int NivelAceite
+        public bool Conectado
         {
-            get => nivelAceite;
+            get => conectado;
 
             // Cada vez que se modifique el estado, se invocara el metodo NotificarObservers()
             set
             {
-                if (nivelAceite != value)
+                if (conectado != value)
                 {
-                    nivelAceite = value;
+                    conectado = value;
                     NotificarObservers();
                 }
             }
         }
 
-        public int NivelAgua
+        public int NivelBateria
         {
-            get => nivelAgua;
+            get => nivelBateria;
 
             // Cada vez que se modifique el estado, se invocara el metodo NotificarObservers()
             set
             {
-                if (nivelAgua != value)
+                if (nivelBateria != value)
                 {
-                    nivelAgua = value;
+                    nivelBateria = value;
                     NotificarObservers();
                 }
             }
         }
 
-        public int NivelPresionNeumaticos
+        public int NivelTiempo
         {
-            get => nivelPresionNeumaticos;
+            get => nivelTiempo;
 
             // Cada vez que se modifique el estado, se invocara el metodo NotificarObservers()
             set
             {
-                if (nivelPresionNeumaticos != value)
+                if (nivelTiempo != value)
                 {
-                    this.nivelPresionNeumaticos = value;
+                    nivelTiempo = value;
                     NotificarObservers();
                 }
             }
@@ -69,12 +69,12 @@ namespace Medidores.Subject
         #region Metodos de la interfaz ISubject
 
         // Constructor que creara un medidor con los valores iniciales de las presiones
-        public MedidorSensores(int nivelAceite, int nivelAgua, int nivelPresionNeumaticos)
+        public MedidorSensores(int nivelBateria, int nivelTiempo, bool conectado)
         {
             _suscriptores = new ArrayList();
-            this.nivelAceite = nivelAceite;
-            this.nivelAgua = nivelAgua;
-            this.nivelPresionNeumaticos = nivelPresionNeumaticos;
+            this.nivelBateria = nivelBateria;
+            this.nivelTiempo = nivelTiempo;
+            this.conectado = conectado;
         }
 
         // Comprobamos si el observer se encuentra en la lista. En caso contrario,
@@ -97,7 +97,7 @@ namespace Medidores.Subject
         public void NotificarObservers()
         {
             // Creamos un array con el estado del Subject
-            int[] valores = { nivelAceite, nivelAgua, nivelPresionNeumaticos };
+            int[] valores = { nivelBateria, nivelTiempo };
 
             // Recorremos todos los objetos suscritos (observers)
             foreach (var o in _suscriptores)
